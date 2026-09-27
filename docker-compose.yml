@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  simg-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: simg-dashboard
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - .simg_state:/app/.simg_state
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - LOG_LEVEL=info
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  nginx:
+    image: nginx:alpine
+    container_name: simg-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      - simg-dashboard
+    restart: unless-stopped
+
+volumes:
+  data:
+  logs:
+  simg_state:
