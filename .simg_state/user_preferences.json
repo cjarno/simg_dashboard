@@ -1,0 +1,17 @@
+{
+  "age_range": {"min": 18, "max": 60},
+  "gender": null,
+  "medical_degree": null,
+  "years_experience": {"min": 0, "max": 30},
+  "country_of_birth": null,
+  "country_of_practice": null,
+  "subspecialty_interest": null,
+  "academic_qualifications": [],
+  "publications": null,
+  "research_experience": null,
+  "language_skills": [],
+  "visa_status": null,
+  "relocation_willing": null,
+  "salary_expectations": null,
+  "job_type": null
+}

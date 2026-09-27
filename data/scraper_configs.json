@@ -1,0 +1,28 @@
+{
+  "seek": {
+    "base_url": "https://www.seek.com.au",
+    "search_terms": ["anaesthetist", "anaesthesia", "critical care", "anaesthesia specialist"],
+    "enabled": true
+  },
+  "linkedin": {
+    "base_url": "https://au.linkedin.com/jobs",
+    "search_terms": ["anaesthesia", "critical care", "anaesthetist"],
+    "enabled": true
+  },
+  "indeed": {
+    "base_url": "https://au.indeed.com",
+    "search_terms": ["anaesthetist", "anaesthesia", "critical care"],
+    "enabled": true
+  },
+  "medical_boards": {
+    "boards": [
+      {"name": "MedJobs.com.au", "enabled": true},
+      {"name": "PractoJobs", "enabled": true},
+      {"name": "MedRecruit", "enabled": true},
+      {"name": "AnaesthesiaJobs", "enabled": true},
+      {"name": "Australian Healthcare Jobs", "enabled": true},
+      {"name": "New Zealand Medical Jobs", "enabled": true},
+      {"name": "HealthCareRecruit", "enabled": true}
+    ]
+  }
+}
