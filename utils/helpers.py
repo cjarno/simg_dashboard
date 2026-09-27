@@ -6,7 +6,8 @@ from typing import Any, Dict
 
 def load_json(path: str) -> Dict:
     """Load JSON file"""
-    full_path = os.path.join(os.path.dirname(__file__), '..', '..', path)
+    # Use current working directory for consistency
+    full_path = os.path.join(os.getcwd(), path)
     try:
         with open(full_path, 'r', encoding='utf-8') as f:
             return json.load(f)
@@ -16,7 +17,8 @@ def load_json(path: str) -> Dict:
 
 def save_json(path: str, data: Dict) -> None:
     """Save data to JSON file"""
-    full_path = os.path.join(os.path.dirname(__file__), '..', '..', path)
+    # Use current working directory for consistency
+    full_path = os.path.join(os.getcwd(), path)
     os.makedirs(os.path.dirname(full_path), exist_ok=True)
     with open(full_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, default=str)
@@ -29,7 +31,7 @@ def get_timestamp() -> str:
 
 def log_event(event: str, details: Dict = None) -> None:
     """Log event to session log"""
-    log_path = os.path.join(os.path.dirname(__file__), '..', '..', '.simg_state', 'session_log.json')
+    log_path = os.path.join(os.getcwd(), '.simg_state', 'session_log.json')
     log_data = load_json(log_path)
     log_data['last_updated'] = get_timestamp()
     

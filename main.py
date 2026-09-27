@@ -32,11 +32,24 @@ app.include_router(scraper_router)
 
 # Mount static files directory
 os.makedirs("static", exist_ok=True)
+os.makedirs("frontend", exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/frontend")
+async def serve_frontend():
+    from fastapi.responses import HTMLResponse
+    with open("frontend/index.html", "r", encoding="utf-8") as f:
+        return HTMLResponse(content=f.read())
 
 @app.get("/")
 async def root():
-    """Root endpoint with API information"""
+    """Root endpoint - redirects to frontend"""
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/frontend/")
+
+@app.get("/api/")
+async def api_root():
+    """API information endpoint"""
     return {
         "name": "SIMG Dashboard",
         "version": "0.1.0",
@@ -81,5 +94,8 @@ async def health():
 
 if __name__ == "__main__":
     import uvicorn
+    import os
+    # Ensure we're running from the correct directory
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     log_event("app_started", {"version": "0.1.0"})
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
+    uvicorn.run(app, host="0.0.0.0", port=8001, log_level="info")

@@ -1,1 +1,70 @@
-{"jobs": []}
+{
+  "jobs": [
+    {
+      "id": "test_001",
+      "title": "Senior Anaesthetist - Sydney",
+      "company": "Royal North Shore Hospital",
+      "location": "Sydney, NSW",
+      "url": "https://example.com/job/1",
+      "source": "test",
+      "posted_date": "2026-09-27T10:59:00Z",
+      "job_type": "Full-time",
+      "salary_min": 150000,
+      "salary_max": 250000,
+      "description": "Seeking experienced anaesthetist",
+      "requirements": [
+        "FRANZCA",
+        "5+ years experience"
+      ],
+      "tags": [
+        "anaesthesia",
+        "hospital",
+        "sydney"
+      ]
+    },
+    {
+      "id": "test_002",
+      "title": "Anaesthetist - Melbourne",
+      "company": "Austin Health",
+      "location": "Melbourne, VIC",
+      "url": "https://example.com/job/2",
+      "source": "test",
+      "posted_date": "2026-09-27T10:59:00Z",
+      "job_type": "Full-time",
+      "salary_min": 140000,
+      "salary_max": 220000,
+      "description": "Anaesthetist position available",
+      "requirements": [
+        "FRANZCA",
+        "3+ years experience"
+      ],
+      "tags": [
+        "anaesthesia",
+        "hospital",
+        "melbourne"
+      ]
+    },
+    {
+      "id": "test_003",
+      "title": "Critical Care Anaesthetist - Brisbane",
+      "company": "Queensland Health",
+      "location": "Brisbane, QLD",
+      "url": "https://example.com/job/3",
+      "source": "test",
+      "posted_date": "2026-09-27T10:59:00Z",
+      "job_type": "Full-time",
+      "salary_min": 160000,
+      "salary_max": 260000,
+      "description": "Critical care anaesthetist role",
+      "requirements": [
+        "FRANZCA",
+        "Critical care experience"
+      ],
+      "tags": [
+        "anaesthesia",
+        "critical care",
+        "brisbane"
+      ]
+    }
+  ]
+}

@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0f172a;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: #e2e8f0;
             min-height: 100vh;
             padding: 20px;
@@ -26,69 +26,93 @@
 
         header {
             text-align: center;
-            padding: 20px;
+            padding: 30px 20px;
             margin-bottom: 30px;
-            border-bottom: 2px solid #334155;
+            border-bottom: 2px solid #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+            border-radius: 12px;
         }
 
         h1 {
             color: #38bdf8;
             font-size: 2.5rem;
             margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
         }
 
         .subtitle {
             color: #94a3b8;
             font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .subtitle em {
+            color: #38bdf8;
+            font-style: normal;
         }
 
         .stats-bar {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
         .stat-card {
-            background: #1e293b;
-            padding: 15px 25px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            min-width: 150px;
+            background: rgba(30, 41, 59, 0.8);
+            padding: 20px 25px;
+            border-radius: 12px;
+            border: 1px solid #38bdf8;
             text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
         }
 
         .stat-card .value {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             color: #38bdf8;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
         }
 
         .stat-card .label {
             font-size: 0.9rem;
             color: #94a3b8;
-            margin-top: 5px;
+            margin-top: 8px;
+            font-weight: 500;
         }
 
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 350px;
+            grid-template-columns: 320px 1fr 280px;
             gap: 20px;
         }
 
-        .filters {
-            background: #1e293b;
+        .panel {
+            background: rgba(30, 41, 59, 0.6);
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 12px;
             border: 1px solid #334155;
-            height: fit-content;
         }
 
-        .filters h3 {
+        .panel h3 {
             color: #38bdf8;
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 1px solid #334155;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filters {
+            height: fit-content;
         }
 
         .filter-group {
@@ -97,97 +121,101 @@
 
         .filter-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             color: #cbd5e1;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
         .filter-group input,
         .filter-group select {
             width: 100%;
-            padding: 8px 12px;
+            padding: 10px 12px;
             background: #0f172a;
             border: 1px solid #334155;
-            border-radius: 4px;
+            border-radius: 6px;
             color: #e2e8f0;
             font-size: 0.9rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .filter-group input:focus,
         .filter-group select:focus {
             outline: none;
             border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
         }
 
         .btn {
             display: inline-block;
-            padding: 10px 20px;
-            background: #38bdf8;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
             color: #0f172a;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 0.9rem;
             font-weight: 600;
             transition: all 0.2s;
-            margin-right: 10px;
-            margin-bottom: 10px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            text-decoration: none;
         }
 
         .btn:hover {
-            background: #0ea5e9;
-        }
-
-        .btn-secondary {
-            background: #475569;
-            color: #e2e8f0;
-        }
-
-        .btn-secondary:hover {
-            background: #64748b;
-        }
-
-        .btn-danger {
-            background: #ef4444;
-            color: #fff;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-
-        .btn-success {
-            background: #22c55e;
-            color: #fff;
-        }
-
-        .btn-success:hover {
-            background: #16a34a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(56, 189, 248, 0.4);
         }
 
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #475569 0%, #64748b 100%);
+            color: #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #64748b 0%, #818cf8 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 5px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 5px 20px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8rem;
         }
 
         .job-list {
-            background: #1e293b;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            min-height: 400px;
+            min-height: 500px;
         }
 
         .job-list h3 {
-            color: #38bdf8;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #334155;
+            font-size: 1.1rem;
         }
 
         .loading {
             text-align: center;
-            padding: 40px;
+            padding: 50px 20px;
             color: #94a3b8;
         }
 
@@ -195,8 +223,8 @@
             border: 3px solid #334155;
             border-top: 3px solid #38bdf8;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             margin: 0 auto 15px;
             animation: spin 1s linear infinite;
         }
@@ -206,29 +234,52 @@
             100% { transform: rotate(360deg); }
         }
 
+        .pulse {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         .job-card {
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 10px;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 12px;
             border: 1px solid #334155;
             transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .job-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 100%);
         }
 
         .job-card:hover {
             border-color: #38bdf8;
             transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(56, 189, 248, 0.2);
         }
 
         .job-card h4 {
             color: #38bdf8;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            font-size: 1.05rem;
         }
 
         .job-card .company {
             color: #94a3b8;
             font-size: 0.9rem;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
         .job-card .location {
@@ -240,59 +291,57 @@
         .job-card .tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 6px;
             margin-top: 8px;
         }
 
         .job-card .tag {
-            background: #334155;
-            color: #e2e8f0;
+            background: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
             font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 3px;
+            padding: 3px 9px;
+            border-radius: 4px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
         }
 
         .job-card .actions {
             display: flex;
             gap: 8px;
-            margin-top: 10px;
-            padding-top: 10px;
+            margin-top: 12px;
+            padding-top: 12px;
             border-top: 1px solid #334155;
         }
 
         .job-card .actions .btn {
             margin: 0;
-            padding: 6px 12px;
-            font-size: 0.8rem;
+            padding: 7px 14px;
+            font-size: 0.85rem;
         }
 
         .favorites-panel {
-            background: #1e293b;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #334155;
             height: fit-content;
-        }
-
-        .favorites-panel h3 {
-            color: #f43f5e;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #334155;
+            max-height: 600px;
         }
 
         .favorite-card {
-            background: #0f172a;
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 8px;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
             border: 1px solid #334155;
             font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .favorite-card:hover {
+            border-color: #f43f5e;
+            transform: translateX(3px);
         }
 
         .favorite-card a {
             color: #38bdf8;
             text-decoration: none;
+            font-weight: 500;
         }
 
         .favorite-card a:hover {
@@ -301,30 +350,37 @@
 
         .empty-state {
             text-align: center;
-            padding: 40px;
+            padding: 50px 20px;
             color: #64748b;
         }
 
         .empty-state .icon {
             font-size: 3rem;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            opacity: 0.5;
         }
 
         .log-panel {
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 8px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            max-height: 250px;
+            background: rgba(15, 23, 42, 0.95);
             border: 1px solid #334155;
-            margin-top: 20px;
-            max-height: 200px;
-            overflow-y: auto;
+            border-radius: 10px;
+            padding: 15px;
             font-family: 'Consolas', 'Monaco', monospace;
             font-size: 0.8rem;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
         .log-panel h4 {
             color: #94a3b8;
             margin-bottom: 10px;
+            font-size: 0.85rem;
         }
 
         .log-entry {
@@ -341,6 +397,10 @@
             color: #38bdf8;
         }
 
+        .log-entry .level-success {
+            color: #22c55e;
+        }
+
         .log-entry .level-warning {
             color: #f59e0b;
         }
@@ -349,9 +409,30 @@
             color: #ef4444;
         }
 
-        @media (max-width: 1024px) {
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-left: 8px;
+        }
+
+        .badge-seek { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .badge-linkedin { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+        .badge-indeed { background: rgba(234, 179, 8, 0.2); color: #fbbf24; }
+        .badge-medical { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+        @media (max-width: 1200px) {
             .main-content {
                 grid-template-columns: 1fr;
+            }
+            
+            .log-panel {
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                right: 20px;
+                width: auto;
             }
         }
     </style>
@@ -360,27 +441,27 @@
     <div class="container">
         <header>
             <h1>🏥 SIMG Dashboard</h1>
-            <p class="subtitle">ANZCA Job Matching Platform for NSW German Doctors</p>
+            <p class="subtitle">ANZCA Job Matching Platform for <em>NSW German Doctors</em> | Filter by SIMG Report 1 criteria</p>
         </header>
 
         <div class="stats-bar">
             <div class="stat-card">
                 <div class="value" id="jobs-count">0</div>
-                <div class="label">Total Jobs</div>
+                <div class="label">📋 Total Jobs</div>
             </div>
             <div class="stat-card">
                 <div class="value" id="favorites-count">0</div>
-                <div class="label">Favorites</div>
+                <div class="label">⭐ My Favorites</div>
             </div>
             <div class="stat-card">
-                <div class="value" id="api-status">Connecting...</div>
-                <div class="label">API Status</div>
+                <div class="value pulse" id="api-status">Connecting...</div>
+                <div class="label">🟢 API Status</div>
             </div>
         </div>
 
         <div class="main-content">
-            <div class="filters">
-                <h3>🔍 Filters</h3>
+            <div class="panel filters">
+                <h3>🔍 Advanced Filters</h3>
                 
                 <div class="filter-group">
                     <label>Job Type</label>
@@ -398,23 +479,30 @@
                 </div>
 
                 <div class="filter-group">
-                    <label>Source</label>
+                    <label>Job Source</label>
                     <select id="source">
                         <option value="">All Sources</option>
                         <option value="seek">SEEK</option>
                         <option value="linkedin">LinkedIn</option>
                         <option value="indeed">Indeed</option>
                         <option value="medical_boards">Medical Boards</option>
+                        <option value="test">Test Data</option>
                     </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Location</label>
+                    <input type="text" id="location" placeholder="Search location...">
                 </div>
 
                 <button class="btn" onclick="loadJobs()">🔄 Refresh Jobs</button>
                 <button class="btn btn-secondary" onclick="scrapeJobs()">🌐 Scrape New Jobs</button>
                 <button class="btn btn-secondary" onclick="loadFavorites()">⭐ Load Favorites</button>
+                <button class="btn btn-secondary" onclick="loadLogs()">📄 View Logs</button>
             </div>
 
-            <div class="job-list">
-                <h3>📋 Job Listings</h3>
+            <div class="panel job-list">
+                <h3>📋 Job Listings <span class="badge" id="filtered-badge">All</span></h3>
                 <div id="jobs-container">
                     <div class="loading">
                         <div class="spinner"></div>
@@ -423,19 +511,19 @@
                 </div>
             </div>
 
-            <div class="favorites-panel">
-                <h3>⭐ My Favorites</h3>
+            <div class="panel favorites-panel">
+                <h3>⭐ My Favorites <span class="badge" id="fav-badge">0</span></h3>
                 <div id="favorites-container">
                     <div class="empty-state">
                         <div class="icon">📭</div>
                         <p>No favorites yet</p>
-                        <p style="margin-top: 10px; font-size: 0.8rem;">Click the star icon to add jobs to favorites</p>
+                        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">Click the star icon to add jobs to favorites</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="log-panel">
+        <div class="log-panel" id="log-panel" style="display: none;">
             <h4>📊 Activity Log</h4>
             <div id="log-container">
                 <p style="color: #64748b;">Waiting for activity...</p>
@@ -444,17 +532,18 @@
     </div>
 
     <script>
-        const API_BASE = 'http://127.0.0.1:8000/api/v1';
+        const API_BASE = '/api/v1';
         let jobs = [];
         let favorites = [];
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             checkAPIStatus();
-            setInterval(checkAPIStatus, 10000);
+            setInterval(checkAPIStatus, 15000);
             loadJobs();
             loadFavorites();
-            setInterval(loadFavorites, 30000);
+            setInterval(loadFavorites, 45000);
+            log('🚀 SIMG Dashboard initialized', 'info');
         });
 
         // API Status
@@ -463,11 +552,12 @@
                 const res = await fetch(`${API_BASE}/health`);
                 if (res.ok) {
                     document.getElementById('api-status').textContent = '✓ Healthy';
-                    document.getElementById('api-status').style.color = '#22c55e';
+                    document.getElementById('api-status').classList.remove('pulse');
+                } else {
+                    document.getElementById('api-status').textContent = '✗ Error';
                 }
             } catch (e) {
                 document.getElementById('api-status').textContent = '✗ Offline';
-                document.getElementById('api-status').style.color = '#ef4444';
             }
         }
 
@@ -496,17 +586,20 @@
                 const jobType = document.getElementById('job-type').value;
                 const keywords = document.getElementById('keywords').value;
                 const source = document.getElementById('source').value;
+                const location = document.getElementById('location').value;
 
                 let url = `${API_BASE}/jobs/`;
                 if (jobType) url += `?job_type=${encodeURIComponent(jobType)}`;
                 if (keywords) url += `&keywords=${encodeURIComponent(keywords)}`;
                 if (source) url += `&source=${encodeURIComponent(source)}`;
+                if (location) url += `&location=${encodeURIComponent(location)}`;
 
                 const res = await fetch(url);
                 const data = await res.json();
                 jobs = data.jobs || [];
 
                 document.getElementById('jobs-count').textContent = jobs.length;
+                document.getElementById('filtered-badge').textContent = `${jobs.length} jobs`;
                 renderJobs();
                 log(`Loaded ${jobs.length} jobs`);
             } catch (e) {
@@ -537,24 +630,32 @@
                 return;
             }
 
-            container.innerHTML = jobs.map(job => `
-                <div class="job-card">
-                    <h4>${job.title}</h4>
-                    <div class="company">${job.company}</div>
-                    <div class="location">📍 ${job.location}</div>
-                    ${job.job_type ? `<div style="color: #64748b; font-size: 0.8rem; margin-bottom: 5px;">${job.job_type}</div>` : ''}
-                    ${job.salary_min ? `<div style="color: #64748b; font-size: 0.8rem; margin-bottom: 5px;">💰 $${job.salary_min.toLocaleString()} - $${job.salary_max?.toLocaleString()}</div>` : ''}
-                    <div class="tags">
-                        ${job.tags?.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            container.innerHTML = jobs.map(job => {
+                const badgeClass = job.source === 'seek' ? 'badge-seek' :
+                                   job.source === 'linkedin' ? 'badge-linkedin' :
+                                   job.source === 'indeed' ? 'badge-indeed' : 'badge-medical';
+                const badgeText = job.source.charAt(0).toUpperCase() + job.source.slice(1);
+
+                return `
+                    <div class="job-card">
+                        <h4>${job.title}</h4>
+                        <div class="company">${job.company}</div>
+                        <div class="location">📍 ${job.location}</div>
+                        ${job.job_type ? `<div style="color: #64748b; font-size: 0.8rem; margin-bottom: 5px;">${job.job_type}</div>` : ''}
+                        ${job.salary_min ? `<div style="color: #64748b; font-size: 0.8rem; margin-bottom: 5px;">💰 $${job.salary_min.toLocaleString()} - $${job.salary_max?.toLocaleString()}</div>` : ''}
+                        <div class="tags">
+                            <span class="${badgeClass}">${badgeText}</span>
+                            ${job.tags?.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-secondary btn-sm" onclick="toggleFavorite('${job.id}', '${job.title}')">
+                                ${job.is_favorited ? '★ Favorited' : '☆ Favorite'}
+                            </button>
+                            <a href="${job.url}" target="_blank" class="btn btn-success btn-sm">View Job</a>
+                        </div>
                     </div>
-                    <div class="actions">
-                        <button class="btn btn-secondary" onclick="toggleFavorite('${job.id}', '${job.title}')">
-                            ${job.is_favorited ? '★ Favorited' : '☆ Favorite'}
-                        </button>
-                        <a href="${job.url}" target="_blank" class="btn btn-success">View Job</a>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         // Toggle Favorite
@@ -568,7 +669,7 @@
             }
             
             loadFavorites();
-            loadJobs(); // Refresh job list to update favorite status
+            loadJobs();
         }
 
         // Add Favorite
@@ -580,7 +681,7 @@
                     body: JSON.stringify({ job_id: jobId, job_title: jobTitle, job_url: '' })
                 });
                 if (res.ok) {
-                    log(`Added to favorites: ${jobTitle}`);
+                    log(`⭐ Added to favorites: ${jobTitle}`);
                     return true;
                 }
             } catch (e) {
@@ -596,7 +697,7 @@
                     method: 'DELETE'
                 });
                 if (res.ok) {
-                    log(`Removed from favorites`);
+                    log('❤️ Removed from favorites');
                     return true;
                 }
             } catch (e) {
@@ -613,6 +714,7 @@
                 favorites = data.favorites || [];
                 
                 document.getElementById('favorites-count').textContent = favorites.length;
+                document.getElementById('fav-badge').textContent = favorites.length;
                 
                 const container = document.getElementById('favorites-container');
                 if (favorites.length === 0) {
@@ -620,14 +722,14 @@
                         <div class="empty-state">
                             <div class="icon">📭</div>
                             <p>No favorites yet</p>
-                            <p style="margin-top: 10px; font-size: 0.8rem;">Click the star icon to add jobs to favorites</p>
+                            <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">Click the star icon to add jobs to favorites</p>
                         </div>
                     `;
                 } else {
                     container.innerHTML = favorites.map(fav => `
                         <div class="favorite-card">
                             <a href="${fav.job_url}" target="_blank">${fav.job_title}</a>
-                            <div style="color: #64748b; font-size: 0.75rem; margin-top: 5px;">Added: ${new Date(fav.added_at).toLocaleDateString()}</div>
+                            <div style="color: #64748b; font-size: 0.75rem; margin-top: 5px;">⭐ Added: ${new Date(fav.added_at).toLocaleDateString()}</div>
                         </div>
                     `).join('');
                 }
@@ -641,8 +743,9 @@
             const container = document.getElementById('jobs-container');
             container.innerHTML = `
                 <div class="loading">
-                    <div class="spinner"></div>
+                    <div class="spinner" style="width: 50px; height: 50px; border-width: 4px;"></div>
                     <p>Scraping job boards...</p>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">This may take a few seconds</p>
                 </div>
             `;
             
@@ -651,7 +754,7 @@
                     method: 'POST'
                 });
                 const data = await res.json();
-                log(`Scraped ${data.total_scraped} jobs from multiple sources`);
+                log(`🌐 Scraped ${data.total_scraped} jobs from multiple sources`, 'success');
                 loadJobs();
             } catch (e) {
                 console.error('Error scraping jobs:', e);
@@ -666,10 +769,34 @@
             }
         }
 
+        // Load Logs
+        async function loadLogs() {
+            try {
+                const res = await fetch(`${API_BASE}/logs`);
+                const data = await res.json();
+                const container = document.getElementById('log-container');
+                if (data.logs && data.logs.length > 0) {
+                    container.innerHTML = data.logs.map(log => `
+                        <div class="log-entry">
+                            <span class="time">[${log.timestamp}]</span>
+                            <span class="level-${log.level}">${log.message}</span>
+                        </div>
+                    `).join('');
+                    log('📄 Loaded application logs');
+                } else {
+                    container.innerHTML = '<p style="color: #64748b;">No logs available</p>';
+                }
+            } catch (e) {
+                console.error('Error loading logs:', e);
+                log('Error loading logs', 'error');
+            }
+        }
+
         // Filter events
         document.getElementById('job-type').addEventListener('change', loadJobs);
         document.getElementById('keywords').addEventListener('input', loadJobs);
         document.getElementById('source').addEventListener('change', loadJobs);
+        document.getElementById('location').addEventListener('input', loadJobs);
     </script>
 </body>
 </html>

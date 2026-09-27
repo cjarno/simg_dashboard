@@ -1,3 +1,4 @@
+import sys
 from fastapi import APIRouter, HTTPException, Query, Request
 from typing import List, Optional, Dict
 from utils.helpers import load_json, save_json, get_timestamp, log_event
@@ -9,12 +10,22 @@ router = APIRouter(prefix="/api/v1/jobs")
 
 
 def load_jobs() -> List[Dict]:
-    jobs_path = "data/jobs.json"
-    return load_json(jobs_path).get('jobs', [])
+    import os
+    # Get the absolute path to the data directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    jobs_path = os.path.join(os.path.dirname(current_dir), 'data', 'jobs.json')
+    print(f"DEBUG: Loading jobs from: {jobs_path}", file=sys.stderr)
+    data = load_json(jobs_path)
+    print(f"DEBUG: Jobs data: {data}", file=sys.stderr)
+    return data.get('jobs', [])
 
 
 def save_jobs(jobs: List[Dict]) -> None:
-    jobs_path = "data/jobs.json"
+    import os
+    # Get the absolute path to the data directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    jobs_path = os.path.join(os.path.dirname(current_dir), 'data', 'jobs.json')
+    print(f"DEBUG: Saving jobs to: {jobs_path}", file=sys.stderr)
     save_json(jobs_path, {"jobs": jobs})
 
 
@@ -149,35 +160,21 @@ async def delete_job(job_id: str, request: Request = None):
 async def scrape_jobs(request: Request = None):
     """Scrape jobs from multiple job boards"""
     from scrapers import seek, linkedin, indeed, medical_boards
-    import asyncio
     
     try:
-        log_event("scrape_started")
+        # Scrape from all sources
+        seek_jobs = await seek.SEEKScraper().scrape()
+        linkedin_jobs = await linkedin.LinkedInScraper().scrape()
+        indeed_jobs = await indeed.IndeedScraper().scrape()
+        medical_jobs = await medical_boards.MedicalBoardsScraper().scrape()
         
-        async def scrape_from_source(source, scraper):
-            """Scrape from a single source"""
-            try:
-                jobs = await scraper.scrape()
-                log_event(f"scrape_{source}", {"jobs_found": len(jobs)})
-                return jobs
-            except Exception as e:
-                log_event(f"scrape_{source}_error", {"error": str(e)})
-                return []
-        
-        tasks = [
-            scrape_from_source("seek", seek.SEEKScraper()),
-            scrape_from_source("linkedin", linkedin.LinkedInScraper()),
-            scrape_from_source("indeed", indeed.IndeedScraper()),
-            scrape_from_source("medical_boards", medical_boards.MedicalBoardsScraper())
-        ]
-        
-        jobs = await asyncio.gather(*tasks)
-        jobs = [job for source_jobs in jobs for job in source_jobs]
+        # Combine all jobs
+        all_jobs = seek_jobs + linkedin_jobs + indeed_jobs + medical_jobs
         
         # Remove duplicates
         seen = set()
         unique_jobs = []
-        for job in jobs:
+        for job in all_jobs:
             job_key = (job.get('title'), job.get('url'))
             if job_key not in seen:
                 seen.add(job_key)
@@ -188,18 +185,17 @@ async def scrape_jobs(request: Request = None):
         current_jobs.extend(unique_jobs)
         save_jobs(current_jobs)
         
-        log_event("scrape_completed", {"total_jobs": len(unique_jobs)})
-        
-        return {
+        result = {
             "message": "Jobs scraped successfully",
             "total_scraped": len(unique_jobs),
             "by_source": {
-                "seek": len([j for j in jobs if j.get('source') == 'seek']),
-                "linkedin": len([j for j in jobs if j.get('source') == 'linkedin']),
-                "indeed": len([j for j in jobs if j.get('source') == 'indeed']),
-                "medical_boards": len([j for j in jobs if j.get('source') == 'medical_boards'])
+                "seek": len(seek_jobs),
+                "linkedin": len(linkedin_jobs),
+                "indeed": len(indeed_jobs),
+                "medical_boards": len(medical_jobs)
             }
         }
+        return result
     except Exception as e:
-        log_event("scrape_error", {"error": str(e)})
+        from fastapi import HTTPException
         raise HTTPException(status_code=500, detail=str(e))
