@@ -4,7 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIMG Dashboard - ANZCA Job Matcher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --accent-primary: #38bdf8;
+            --accent-secondary: #0ea5e9;
+            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,244 +30,109 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: var(--text-primary);
             min-height: 100vh;
-            padding: 20px;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        header {
-            text-align: center;
-            padding: 30px 20px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
-            border-radius: 12px;
-        }
-
-        h1 {
-            color: #38bdf8;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
-        }
-
-        .subtitle {
-            color: #94a3b8;
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .subtitle em {
-            color: #38bdf8;
-            font-style: normal;
-        }
-
-        .stats-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: rgba(30, 41, 59, 0.8);
-            padding: 20px 25px;
-            border-radius: 12px;
-            border: 1px solid #38bdf8;
-            text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
-        }
-
-        .stat-card .value {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #38bdf8;
-            text-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
-        }
-
-        .stat-card .label {
-            font-size: 0.9rem;
-            color: #94a3b8;
-            margin-top: 8px;
-            font-weight: 500;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 320px 1fr 280px;
-            gap: 20px;
-        }
-
-        .panel {
+        /* Glassmorphism */
+        .glass {
             background: rgba(30, 41, 59, 0.6);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #334155;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .panel h3 {
-            color: #38bdf8;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #334155;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
         }
 
-        .filters {
-            height: fit-content;
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.4);
         }
 
-        .filter-group {
-            margin-bottom: 15px;
+        /* Animated header */
+        header {
+            position: relative;
+            overflow: hidden;
         }
 
-        .filter-group label {
-            display: block;
-            margin-bottom: 6px;
-            color: #cbd5e1;
-            font-size: 0.85rem;
-            font-weight: 500;
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
         }
 
-        .filter-group input,
-        .filter-group select {
-            width: 100%;
-            padding: 10px 12px;
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 6px;
-            color: #e2e8f0;
-            font-size: 0.9rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .filter-group input:focus,
-        .filter-group select:focus {
-            outline: none;
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 18px;
-            background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
-            color: #0f172a;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            margin-right: 8px;
-            margin-bottom: 8px;
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(56, 189, 248, 0.4);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #475569 0%, #64748b 100%);
-            color: #e2e8f0;
-        }
-
-        .btn-secondary:hover {
-            background: linear-gradient(135deg, #64748b 0%, #818cf8 100%);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: #fff;
-        }
-
-        .btn-danger:hover {
-            box-shadow: 0 5px 20px rgba(239, 68, 68, 0.4);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-            color: #fff;
-        }
-
-        .btn-success:hover {
-            box-shadow: 0 5px 20px rgba(34, 197, 94, 0.4);
-        }
-
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 0.8rem;
-        }
-
-        .job-list {
-            min-height: 500px;
-        }
-
-        .job-list h3 {
-            font-size: 1.1rem;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 50px 20px;
-            color: #94a3b8;
-        }
-
-        .spinner {
-            border: 3px solid #334155;
-            border-top: 3px solid #38bdf8;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            margin: 0 auto 15px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
+        @keyframes rotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        .pulse {
-            animation: pulse 1.5s ease-in-out infinite;
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        /* Loading animation */
+        .loading-dots::after {
+            content: '.';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        /* Badge animations */
+        .badge {
+            animation: pulse 2s ease-in-out infinite;
         }
 
         @keyframes pulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            50% { opacity: 0.7; }
         }
 
+        /* Job card reveal on hover */
         .job-card {
-            background: rgba(15, 23, 42, 0.8);
-            padding: 18px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            border: 1px solid #334155;
-            transition: all 0.2s;
             position: relative;
             overflow: hidden;
         }
@@ -257,546 +140,718 @@
         .job-card::before {
             content: '';
             position: absolute;
-            left: 0;
             top: 0;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 100%);
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.1), transparent);
+            transition: left 0.5s ease;
         }
 
-        .job-card:hover {
-            border-color: #38bdf8;
-            transform: translateX(5px);
-            box-shadow: 0 5px 20px rgba(56, 189, 248, 0.2);
+        .job-card:hover::before {
+            left: 100%;
         }
 
-        .job-card h4 {
-            color: #38bdf8;
-            margin-bottom: 6px;
-            font-size: 1.05rem;
+        /* Button hover effects */
+        .btn-gradient {
+            background: var(--accent-gradient);
+            position: relative;
+            overflow: hidden;
         }
 
-        .job-card .company {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            margin-bottom: 6px;
+        .btn-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
         }
 
-        .job-card .location {
-            color: #64748b;
-            font-size: 0.85rem;
-            margin-bottom: 8px;
+        .btn-gradient:hover::before {
+            left: 100%;
         }
 
-        .job-card .tags {
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Filter group styling */
+        .filter-section {
+            border-left: 3px solid var(--accent-primary);
+            padding-left: 15px;
+        }
+
+        .filter-section h4 {
+            color: var(--accent-primary);
+            font-weight: 600;
+            margin-bottom: 12px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .job-card .tag {
-            background: rgba(56, 189, 248, 0.2);
-            color: #38bdf8;
-            font-size: 0.75rem;
-            padding: 3px 9px;
-            border-radius: 4px;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-        }
-
-        .job-card .actions {
-            display: flex;
+            align-items: center;
             gap: 8px;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #334155;
         }
 
-        .job-card .actions .btn {
-            margin: 0;
-            padding: 7px 14px;
-            font-size: 0.85rem;
+        /* Stats animation */
+        .stat-number {
+            animation: countUp 1s ease-out;
         }
 
-        .favorites-panel {
-            height: fit-content;
-            max-height: 600px;
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .favorite-card {
-            background: rgba(15, 23, 42, 0.8);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #334155;
-            font-size: 0.85rem;
+        /* Toast notification */
+        .toast {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Skeleton loading */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s ease-in-out infinite;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Job source badges */
+        .source-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .source-seek { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .source-linkedin { background: rgba(236, 72, 153, 0.2); color: #ec4899; border: 1px solid rgba(236, 72, 153, 0.3); }
+        .source-indeed { background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .source-medical { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+        /* Tag styling */
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin: 2px;
             transition: all 0.2s;
         }
 
-        .favorite-card:hover {
-            border-color: #f43f5e;
-            transform: translateX(3px);
+        .tag:hover {
+            background: rgba(56, 189, 248, 0.2);
+            color: var(--accent-primary);
         }
 
-        .favorite-card a {
-            color: #38bdf8;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .favorite-card a:hover {
-            text-decoration: underline;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 50px 20px;
-            color: #64748b;
-        }
-
-        .empty-state .icon {
-            font-size: 3rem;
-            margin-bottom: 12px;
-            opacity: 0.5;
-        }
-
-        .log-panel {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 350px;
-            max-height: 250px;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid #334155;
-            border-radius: 10px;
-            padding: 15px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.8rem;
-            overflow-y: auto;
-            z-index: 1000;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .log-panel h4 {
-            color: #94a3b8;
-            margin-bottom: 10px;
-            font-size: 0.85rem;
-        }
-
-        .log-entry {
-            padding: 3px 0;
-            border-bottom: 1px solid #1e293b;
-        }
-
-        .log-entry .time {
-            color: #64748b;
-            margin-right: 10px;
-        }
-
-        .log-entry .level-info {
-            color: #38bdf8;
-        }
-
-        .log-entry .level-success {
-            color: #22c55e;
-        }
-
-        .log-entry .level-warning {
-            color: #f59e0b;
-        }
-
-        .log-entry .level-error {
-            color: #ef4444;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
+        /* SIMG Criteria badges */
+        .simg-criteria {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 6px;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
             border-radius: 4px;
-            font-size: 0.75rem;
-            margin-left: 8px;
+            font-size: 0.65rem;
+            color: #22c55e;
+            margin: 1px;
         }
 
-        .badge-seek { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
-        .badge-linkedin { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
-        .badge-indeed { background: rgba(234, 179, 8, 0.2); color: #fbbf24; }
-        .badge-medical { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .simg-criteria.match {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.4);
+            color: var(--accent-primary);
+        }
 
+        /* Responsive adjustments */
         @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 280px 1fr 240px;
+            }
+        }
+
+        @media (max-width: 1024px) {
             .main-content {
                 grid-template-columns: 1fr;
             }
             
-            .log-panel {
-                position: fixed;
-                bottom: 20px;
-                left: 20px;
-                right: 20px;
-                width: auto;
+            .filters, .job-list, .sidebar {
+                margin-bottom: 20px;
             }
+        }
+
+        /* Animation for new job */
+        @keyframes newJob {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .new-job {
+            animation: newJob 0.5s ease;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🏥 SIMG Dashboard</h1>
-            <p class="subtitle">ANZCA Job Matching Platform for <em>NSW German Doctors</em> | Filter by SIMG Report 1 criteria</p>
-        </header>
-
-        <div class="stats-bar">
-            <div class="stat-card">
-                <div class="value" id="jobs-count">0</div>
-                <div class="label">📋 Total Jobs</div>
-            </div>
-            <div class="stat-card">
-                <div class="value" id="favorites-count">0</div>
-                <div class="label">⭐ My Favorites</div>
-            </div>
-            <div class="stat-card">
-                <div class="value pulse" id="api-status">Connecting...</div>
-                <div class="label">🟢 API Status</div>
-            </div>
-        </div>
-
-        <div class="main-content">
-            <div class="panel filters">
-                <h3>🔍 Advanced Filters</h3>
-                
-                <div class="filter-group">
-                    <label>Job Type</label>
-                    <select id="job-type">
-                        <option value="">All Types</option>
-                        <option value="Full-time">Full-time</option>
-                        <option value="Part-time">Part-time</option>
-                        <option value="Contract">Contract</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label>Keywords</label>
-                    <input type="text" id="keywords" placeholder="Search keywords...">
-                </div>
-
-                <div class="filter-group">
-                    <label>Job Source</label>
-                    <select id="source">
-                        <option value="">All Sources</option>
-                        <option value="seek">SEEK</option>
-                        <option value="linkedin">LinkedIn</option>
-                        <option value="indeed">Indeed</option>
-                        <option value="medical_boards">Medical Boards</option>
-                        <option value="test">Test Data</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label>Location</label>
-                    <input type="text" id="location" placeholder="Search location...">
-                </div>
-
-                <button class="btn" onclick="loadJobs()">🔄 Refresh Jobs</button>
-                <button class="btn btn-secondary" onclick="scrapeJobs()">🌐 Scrape New Jobs</button>
-                <button class="btn btn-secondary" onclick="loadFavorites()">⭐ Load Favorites</button>
-                <button class="btn btn-secondary" onclick="loadLogs()">📄 View Logs</button>
-            </div>
-
-            <div class="panel job-list">
-                <h3>📋 Job Listings <span class="badge" id="filtered-badge">All</span></h3>
-                <div id="jobs-container">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <p>Loading jobs...</p>
+    <!-- Header -->
+    <header class="glass">
+        <div class="container">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
+                        <i class="fas fa-hospital-alt text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                            SIMG Dashboard
+                        </h1>
+                        <p class="text-sm text-cyan-300">ANZCA Job Matcher & Scraper</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="panel favorites-panel">
-                <h3>⭐ My Favorites <span class="badge" id="fav-badge">0</span></h3>
-                <div id="favorites-container">
-                    <div class="empty-state">
-                        <div class="icon">📭</div>
-                        <p>No favorites yet</p>
-                        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">Click the star icon to add jobs to favorites</p>
+                <div class="flex items-center gap-4">
+                    <a href="/docs" class="btn btn-secondary text-sm py-2 px-4 rounded-lg">
+                        <i class="fas fa-file-code mr-2"></i>API Docs
+                    </a>
+                    <div class="relative">
+                        <i class="fas fa-bell text-2xl cursor-pointer hover:text-cyan-400 transition-colors" onclick="showNotifications()"></i>
+                        <span id="notification-badge" class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-xs text-white">0</span>
                     </div>
                 </div>
             </div>
         </div>
+    </header>
 
-        <div class="log-panel" id="log-panel" style="display: none;">
-            <h4>📊 Activity Log</h4>
-            <div id="log-container">
-                <p style="color: #64748b;">Waiting for activity...</p>
+    <!-- Main Content -->
+    <div class="container max-w-[1800px] mx-auto p-6">
+        <!-- Stats Bar -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="glass-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                        <i class="fas fa-briefcase text-xl"></i>
+                    </div>
+                    <span class="text-xs text-cyan-300">Total Jobs</span>
+                </div>
+                <div id="total-jobs" class="text-4xl font-bold stat-number">Loading...</div>
+                <p class="text-sm text-cyan-300 mt-2">Active job listings</p>
+            </div>
+
+            <div class="glass-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                        <i class="fas fa-star text-xl"></i>
+                    </div>
+                    <span class="text-xs text-purple-300">Favorites</span>
+                </div>
+                <div id="favorites-count" class="text-4xl font-bold stat-number">0</div>
+                <p class="text-sm text-purple-300 mt-2">Saved positions</p>
+            </div>
+
+            <div class="glass-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-xl"></i>
+                    </div>
+                    <span class="text-xs text-green-300">SIMG Match</span>
+                </div>
+                <div id="simg-score" class="text-4xl font-bold stat-number">0%</div>
+                <p class="text-sm text-green-300 mt-2">Average match rate</p>
+            </div>
+
+            <div class="glass-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+                        <i class="fas fa-server text-xl"></i>
+                    </div>
+                    <span class="text-xs text-orange-300">API Status</span>
+                </div>
+                <div id="api-status" class="text-4xl font-bold stat-number text-green-400">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <p class="text-sm text-orange-300 mt-2">System operational</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Filters Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="glass-card rounded-xl p-6 sticky top-4">
+                    <h2 class="text-xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fas fa-filter text-cyan-400"></i>
+                        Filters
+                    </h2>
+
+                    <!-- Basic Filters -->
+                    <div class="filter-section mb-6">
+                        <h4><i class="fas fa-search text-cyan-400"></i> Search</h4>
+                        <div class="mb-4">
+                            <label class="text-xs text-cyan-300 mb-2 block">Keywords</label>
+                            <input type="text" id="keyword-filter" placeholder="Job title, location..." 
+                                   class="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all">
+                        </div>
+                        <div>
+                            <label class="text-xs text-cyan-300 mb-2 block">Job Type</label>
+                            <select id="job-type-filter" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all">
+                                <option value="">All Types</option>
+                                <option value="Full-time">Full-time</option>
+                                <option value="Part-time">Part-time</option>
+                                <option value="Contract">Contract</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- SIMG Criteria Filters -->
+                    <div class="filter-section mb-6">
+                        <h4><i class="fas fa-clipboard-check text-cyan-400"></i> SIMG Criteria</h4>
+                        <div id="simg-filters" class="space-y-3">
+                            <!-- Will be populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Source Filter -->
+                    <div class="filter-section mb-6">
+                        <h4><i class="fas fa-th text-cyan-400"></i> Job Sources</h4>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="flex items-center gap-2 p-3 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-700/50 transition-all">
+                                <input type="checkbox" id="source-seek" class="w-4 h-4 rounded border-slate-600 text-cyan-400 focus:ring-cyan-400" checked>
+                                <span class="text-sm text-cyan-300">SEEK</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-700/50 transition-all">
+                                <input type="checkbox" id="source-linkedin" class="w-4 h-4 rounded border-slate-600 text-cyan-400 focus:ring-cyan-400" checked>
+                                <span class="text-sm text-cyan-300">LinkedIn</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-700/50 transition-all">
+                                <input type="checkbox" id="source-indeed" class="w-4 h-4 rounded border-slate-600 text-cyan-400 focus:ring-cyan-400" checked>
+                                <span class="text-sm text-cyan-300">Indeed</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-700/50 transition-all">
+                                <input type="checkbox" id="source-medical" class="w-4 h-4 rounded border-slate-600 text-cyan-400 focus:ring-cyan-400" checked>
+                                <span class="text-sm text-cyan-300">Medical Boards</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="space-y-3">
+                        <button onclick="applyFilters()" class="btn btn-gradient w-full py-3 rounded-lg font-semibold">
+                            <i class="fas fa-filter mr-2"></i>Apply Filters
+                        </button>
+                        <button onclick="clearFilters()" class="btn btn-secondary w-full py-3 rounded-lg font-semibold">
+                            <i class="fas fa-undo mr-2"></i>Clear Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job List -->
+            <div class="lg:col-span-2">
+                <div class="glass-card rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold flex items-center gap-3">
+                            <i class="fas fa-list text-cyan-400"></i>
+                            Job Listings
+                            <span id="jobs-count" class="text-sm text-cyan-300 bg-slate-800 px-3 py-1 rounded-full">Loading...</span>
+                        </h2>
+                        <div class="flex gap-2">
+                            <button onclick="scrapeJobs('seek')" class="btn btn-gradient py-2 px-4 rounded-lg text-sm">
+                                <i class="fas fa-plus-circle mr-2"></i>Scrape SEEK
+                            </button>
+                            <button onclick="scrapeJobs('linkedin')" class="btn btn-secondary py-2 px-4 rounded-lg text-sm">
+                                <i class="fab fa-linkedin mr-2"></i>LinkedIn
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Job Cards -->
+                    <div id="job-list" class="space-y-4">
+                        <div class="text-center py-12">
+                            <i class="fas fa-spinner fa-spin text-4xl text-cyan-400 mb-4"></i>
+                            <p class="text-cyan-300">Loading jobs...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="glass-card rounded-xl p-6 sticky top-4">
+                    <h2 class="text-xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fas fa-compass text-cyan-400"></i>
+                        Quick Actions
+                    </h2>
+
+                    <div class="space-y-4">
+                        <button onclick="openFavorites()" class="btn btn-gradient w-full py-3 rounded-lg font-semibold">
+                            <i class="fas fa-star mr-2"></i>Favorites
+                        </button>
+                        <button onclick="openApplications()" class="btn btn-secondary w-full py-3 rounded-lg font-semibold">
+                            <i class="fas fa-folder mr-2"></i>Applications
+                        </button>
+                        <button onclick="exportJobs()" class="btn btn-secondary w-full py-3 rounded-lg font-semibold">
+                            <i class="fas fa-file-export mr-2"></i>Export CSV
+                        </button>
+                        <button onclick="showSettings()" class="btn btn-secondary w-full py-3 rounded-lg font-semibold">
+                            <i class="fas fa-cog mr-2"></i>Settings
+                        </button>
+                    </div>
+
+                    <!-- SIMG Report 1 Checklist -->
+                    <div class="mt-6 pt-6 border-t border-slate-700">
+                        <h3 class="text-lg font-semibold mb-4 text-cyan-300">SIMG Report 1 Checklist</h3>
+                        <div id="simg-checklist" class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="simg-1" class="w-4 h-4 rounded border-slate-600 text-cyan-400">
+                                <span class="text-slate-300">Complete medical school application</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="simg-2" class="w-4 h-4 rounded border-slate-600 text-cyan-400">
+                                <span class="text-slate-300">Submit citizenship documents</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="simg-3" class="w-4 h-4 rounded border-slate-600 text-cyan-400">
+                                <span class="text-slate-300">Provide proof of identity</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="simg-4" class="w-4 h-4 rounded border-slate-600 text-cyan-400">
+                                <span class="text-slate-300">Submit academic transcripts</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="simg-5" class="w-4 h-4 rounded border-slate-600 text-cyan-400">
+                                <span class="text-slate-300">Provide evidence of work experience</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-40">
+        <div class="glass-card rounded-xl p-6 max-w-md w-full">
+            <h3 class="text-xl font-bold mb-4 text-cyan-400">Notifications</h3>
+            <div id="notification-list" class="space-y-3">
+                <p class="text-slate-300">No notifications</p>
+            </div>
+            <button onclick="closeNotifications()" class="btn btn-gradient w-full mt-4">Close</button>
+        </div>
+    </div>
+
     <script>
-        const API_BASE = '/api/v1';
+        // API Base URL
+        const API_BASE = 'http://localhost:8004/api/v1';
+
+        // State
         let jobs = [];
         let favorites = [];
+        let SIMG_Criteria = [
+            'Complete medical school application',
+            'Submit citizenship documents',
+            'Provide proof of identity',
+            'Submit academic transcripts',
+            'Provide evidence of work experience',
+            'Pass English proficiency test',
+            'Provide medical council registration',
+            'Submit proof of professional experience',
+            'Provide medical references',
+            'Complete health assessment',
+            'Submit character references',
+            'Provide police clearance',
+            'Submit medical fitness certificate',
+            'Provide vaccination records',
+            'Complete personality assessment'
+        ];
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            checkAPIStatus();
-            setInterval(checkAPIStatus, 15000);
-            loadJobs();
-            loadFavorites();
-            setInterval(loadFavorites, 45000);
-            log('🚀 SIMG Dashboard initialized', 'info');
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadJobs();
+            await loadFavorites();
+            updateStats();
+            setupEventListeners();
+            startPolling();
         });
 
-        // API Status
-        async function checkAPIStatus() {
-            try {
-                const res = await fetch(`${API_BASE}/health`);
-                if (res.ok) {
-                    document.getElementById('api-status').textContent = '✓ Healthy';
-                    document.getElementById('api-status').classList.remove('pulse');
-                } else {
-                    document.getElementById('api-status').textContent = '✗ Error';
-                }
-            } catch (e) {
-                document.getElementById('api-status').textContent = '✗ Offline';
-            }
-        }
-
-        // Log to UI
-        function log(message, level = 'info') {
-            const container = document.getElementById('log-container');
-            const entry = document.createElement('div');
-            entry.className = 'log-entry';
-            const time = new Date().toLocaleTimeString();
-            entry.innerHTML = `<span class="time">[${time}]</span><span class="level-${level}">${message}</span>`;
-            container.insertBefore(entry, container.firstChild);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        // Load Jobs
+        // Load jobs
         async function loadJobs() {
-            const container = document.getElementById('jobs-container');
-            container.innerHTML = `
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading jobs...</p>
-                </div>
-            `;
-
             try {
-                const jobType = document.getElementById('job-type').value;
-                const keywords = document.getElementById('keywords').value;
-                const source = document.getElementById('source').value;
-                const location = document.getElementById('location').value;
-
-                let url = `${API_BASE}/jobs/`;
-                if (jobType) url += `?job_type=${encodeURIComponent(jobType)}`;
-                if (keywords) url += `&keywords=${encodeURIComponent(keywords)}`;
-                if (source) url += `&source=${encodeURIComponent(source)}`;
-                if (location) url += `&location=${encodeURIComponent(location)}`;
-
-                const res = await fetch(url);
-                const data = await res.json();
+                const response = await fetch(`${API_BASE}/jobs/`);
+                const data = await response.json();
                 jobs = data.jobs || [];
-
-                document.getElementById('jobs-count').textContent = jobs.length;
-                document.getElementById('filtered-badge').textContent = `${jobs.length} jobs`;
-                renderJobs();
-                log(`Loaded ${jobs.length} jobs`);
-            } catch (e) {
-                console.error('Error loading jobs:', e);
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon">⚠️</div>
-                        <p>Error loading jobs</p>
-                        <p style="margin-top: 10px; font-size: 0.8rem;">${e.message}</p>
-                    </div>
-                `;
-                log('Error loading jobs', 'error');
+                renderJobs(jobs);
+                document.getElementById('jobs-count').textContent = `${jobs.length} jobs`;
+            } catch (error) {
+                showToast('Error loading jobs', 'error');
+                console.error('Error loading jobs:', error);
             }
         }
 
-        // Render Jobs
-        function renderJobs() {
-            const container = document.getElementById('jobs-container');
+        // Load favorites
+        async function loadFavorites() {
+            try {
+                const response = await fetch(`${API_BASE}/favorites/`);
+                const data = await response.json();
+                favorites = data.favorites || [];
+                updateFavoritesUI();
+            } catch (error) {
+                console.error('Error loading favorites:', error);
+            }
+        }
+
+        // Render jobs
+        function renderJobs(jobList) {
+            const container = document.getElementById('job-list');
             
-            if (jobs.length === 0) {
+            if (jobList.length === 0) {
                 container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon">📭</div>
-                        <p>No jobs found</p>
-                        <p style="margin-top: 10px; font-size: 0.8rem;">Try scraping for new jobs or adjusting filters</p>
+                    <div class="text-center py-12">
+                        <i class="fas fa-inbox text-5xl text-slate-600 mb-4"></i>
+                        <p class="text-xl text-slate-400">No jobs found</p>
+                        <p class="text-sm text-slate-500 mt-2">Try adjusting your filters or scrape new jobs</p>
                     </div>
                 `;
                 return;
             }
 
-            container.innerHTML = jobs.map(job => {
-                const badgeClass = job.source === 'seek' ? 'badge-seek' :
-                                   job.source === 'linkedin' ? 'badge-linkedin' :
-                                   job.source === 'indeed' ? 'badge-indeed' : 'badge-medical';
-                const badgeText = job.source.charAt(0).toUpperCase() + job.source.slice(1);
-
-                return `
-                    <div class="job-card">
-                        <h4>${job.title}</h4>
-                        <div class="company">${job.company}</div>
-                        <div class="location">📍 ${job.location}</div>
-                        ${job.job_type ? `<div style="color: #64748b; font-size: 0.8rem; margin-bottom: 5px;">${job.job_type}</div>` : ''}
-                        ${job.salary_min ? `<div style="color: #64748b; font-size: 0.8rem; margin-bottom: 5px;">💰 $${job.salary_min.toLocaleString()} - $${job.salary_max?.toLocaleString()}</div>` : ''}
-                        <div class="tags">
-                            <span class="${badgeClass}">${badgeText}</span>
-                            ${job.tags?.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            container.innerHTML = jobList.map((job, index) => `
+                <div class="glass-card rounded-xl p-5 job-card new-job" style="animation-delay: ${index * 0.1}s">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-white mb-1">${job.title || 'Untitled Position'}</h3>
+                            <p class="text-cyan-300 text-sm">${job.company || 'Unknown Company'}</p>
+                            <p class="text-slate-400 text-xs mt-1"><i class="fas fa-map-marker-alt mr-1"></i>${job.location || 'Location not specified'}</p>
                         </div>
-                        <div class="actions">
-                            <button class="btn btn-secondary btn-sm" onclick="toggleFavorite('${job.id}', '${job.title}')">
-                                ${job.is_favorited ? '★ Favorited' : '☆ Favorite'}
+                        <div class="flex items-center gap-2">
+                            <span class="source-badge source-${job.source || 'seek'}">
+                                ${job.source?.toUpperCase() || 'SEEK'}
+                            </span>
+                            <button onclick="toggleFavorite('${job.id || 'unknown'}', ${job.is_favorite || false})" 
+                                    class="text-2xl ${job.is_favorite ? 'text-yellow-400' : 'text-slate-400'} hover:scale-125 transition-transform">
+                                <i class="${job.is_favorite ? 'fas' : 'far'} fa-star"></i>
                             </button>
-                            <a href="${job.url}" target="_blank" class="btn btn-success btn-sm">View Job</a>
                         </div>
                     </div>
-                `;
-            }).join('');
+                    
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-xs text-slate-400"><i class="far fa-clock mr-1"></i>${formatDate(job.posted_date)}</span>
+                        <span class="text-xs text-cyan-400"><i class="fas fa-dollar-sign mr-1"></i>$${job.salary_min || 0}k - $${job.salary_max || 0}k</span>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2 mb-3">
+                        ${job.tags?.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        ${job.requirements?.slice(0, 3)?.map(req => `<span class="simg-criteria">${req}</span>`).join('')}
+                    </div>
+
+                    <div class="flex items-center gap-3 pt-3 border-t border-slate-700">
+                        <a href="${job.url || '#'}" target="_blank" class="btn btn-gradient flex-1 py-2 rounded-lg text-sm font-medium">
+                            <i class="fas fa-external-link-alt mr-2"></i>View Job
+                        </a>
+                        <button onclick="applyJob('${job.id || 'unknown'}')" class="btn btn-secondary flex-1 py-2 rounded-lg text-sm font-medium">
+                            <i class="fas fa-paper-plane mr-2"></i>Apply
+                        </button>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        // Toggle Favorite
-        async function toggleFavorite(jobId, jobTitle) {
-            const isFav = favorites.some(f => f.job_id === jobId);
+        // Update stats
+        function updateStats() {
+            document.getElementById('total-jobs').textContent = jobs.length;
+            document.getElementById('favorites-count').textContent = favorites.length;
             
-            if (isFav) {
-                await removeFavorite(jobId);
-            } else {
-                await addFavorite(jobId, jobTitle);
-            }
-            
-            loadFavorites();
-            loadJobs();
+            // Calculate SIMG match rate
+            const matchCount = jobs.filter(job => job.requirements?.length > 0).length;
+            const matchRate = jobs.length > 0 ? Math.round((matchCount / jobs.length) * 100) : 0;
+            document.getElementById('simg-score').textContent = `${matchRate}%`;
         }
 
-        // Add Favorite
-        async function addFavorite(jobId, jobTitle) {
+        // Toggle favorite
+        async function toggleFavorite(jobId, isFavorite) {
             try {
-                const res = await fetch(`${API_BASE}/favorites/`, {
+                const response = await fetch(`${API_BASE}/favorites/${jobId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ is_favorite: !isFavorite })
+                });
+                
+                if (response.ok) {
+                    showToast(isFavorite ? 'Removed from favorites' : 'Added to favorites', 'success');
+                    loadFavorites();
+                }
+            } catch (error) {
+                showToast('Error updating favorite', 'error');
+            }
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const keyword = document.getElementById('keyword-filter').value.toLowerCase();
+            const jobType = document.getElementById('job-type-filter').value;
+            
+            const filtered = jobs.filter(job => {
+                const matchesKeyword = !keyword || 
+                    job.title?.toLowerCase().includes(keyword) ||
+                    job.description?.toLowerCase().includes(keyword) ||
+                    job.location?.toLowerCase().includes(keyword);
+                
+                const matchesType = !jobType || job.job_type === jobType;
+                
+                return matchesKeyword && matchesType;
+            });
+            
+            renderJobs(filtered);
+            showToast('Filters applied', 'success');
+        }
+
+        // Clear filters
+        function clearFilters() {
+            document.getElementById('keyword-filter').value = '';
+            document.getElementById('job-type-filter').value = '';
+            applyFilters();
+        }
+
+        // Scrape jobs
+        async function scrapeJobs(source) {
+            showToast('Scraping jobs...', 'info');
+            
+            try {
+                const response = await fetch(`${API_BASE}/scraper/scrape`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ job_id: jobId, job_title: jobTitle, job_url: '' })
+                    body: JSON.stringify({ source: source })
                 });
-                if (res.ok) {
-                    log(`⭐ Added to favorites: ${jobTitle}`);
-                    return true;
-                }
-            } catch (e) {
-                console.error('Error adding favorite:', e);
-            }
-            return false;
-        }
-
-        // Remove Favorite
-        async function removeFavorite(jobId) {
-            try {
-                const res = await fetch(`${API_BASE}/favorites/${jobId}`, {
-                    method: 'DELETE'
-                });
-                if (res.ok) {
-                    log('❤️ Removed from favorites');
-                    return true;
-                }
-            } catch (e) {
-                console.error('Error removing favorite:', e);
-            }
-            return false;
-        }
-
-        // Load Favorites
-        async function loadFavorites() {
-            try {
-                const res = await fetch(`${API_BASE}/favorites/`);
-                const data = await res.json();
-                favorites = data.favorites || [];
                 
-                document.getElementById('favorites-count').textContent = favorites.length;
-                document.getElementById('fav-badge').textContent = favorites.length;
+                const data = await response.json();
                 
-                const container = document.getElementById('favorites-container');
-                if (favorites.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <div class="icon">📭</div>
-                            <p>No favorites yet</p>
-                            <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">Click the star icon to add jobs to favorites</p>
-                        </div>
-                    `;
+                if (response.ok) {
+                    showToast(`Scraped ${data.count} jobs from ${source}`, 'success');
+                    await loadJobs();
                 } else {
-                    container.innerHTML = favorites.map(fav => `
-                        <div class="favorite-card">
-                            <a href="${fav.job_url}" target="_blank">${fav.job_title}</a>
-                            <div style="color: #64748b; font-size: 0.75rem; margin-top: 5px;">⭐ Added: ${new Date(fav.added_at).toLocaleDateString()}</div>
-                        </div>
-                    `).join('');
+                    showToast('Error scraping jobs', 'error');
                 }
-            } catch (e) {
-                console.error('Error loading favorites:', e);
+            } catch (error) {
+                showToast('Error scraping jobs', 'error');
+                console.error('Scrape error:', error);
             }
         }
 
-        // Scrape Jobs
-        async function scrapeJobs() {
-            const container = document.getElementById('jobs-container');
-            container.innerHTML = `
-                <div class="loading">
-                    <div class="spinner" style="width: 50px; height: 50px; border-width: 4px;"></div>
-                    <p>Scraping job boards...</p>
-                    <p style="font-size: 0.85rem; margin-top: 5px;">This may take a few seconds</p>
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `glass-card rounded-lg px-6 py-4 toast ${
+                type === 'success' ? 'border-green-500/50' :
+                type === 'error' ? 'border-red-500/50' :
+                type === 'info' ? 'border-cyan-500/50' : 'border-slate-500/50'
+            }`;
+            
+            const icons = {
+                success: '<i class="fas fa-check-circle text-green-400 mr-2"></i>',
+                error: '<i class="fas fa-exclamation-circle text-red-400 mr-2"></i>',
+                info: '<i class="fas fa-info-circle text-cyan-400 mr-2"></i>',
+                default: '<i class="fas fa-info-circle mr-2"></i>'
+            };
+            
+            toast.innerHTML = `
+                <div class="flex items-center gap-3">
+                    ${icons[type] || icons.default}
+                    <span>${message}</span>
                 </div>
             `;
             
-            try {
-                const res = await fetch(`${API_BASE}/jobs/scrape`, {
-                    method: 'POST'
-                });
-                const data = await res.json();
-                log(`🌐 Scraped ${data.total_scraped} jobs from multiple sources`, 'success');
-                loadJobs();
-            } catch (e) {
-                console.error('Error scraping jobs:', e);
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon">⚠️</div>
-                        <p>Error scraping jobs</p>
-                        <p style="margin-top: 10px; font-size: 0.8rem;">${e.message}</p>
-                    </div>
-                `;
-                log('Error scraping jobs', 'error');
-            }
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease-out reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
         }
 
-        // Load Logs
-        async function loadLogs() {
-            try {
-                const res = await fetch(`${API_BASE}/logs`);
-                const data = await res.json();
-                const container = document.getElementById('log-container');
-                if (data.logs && data.logs.length > 0) {
-                    container.innerHTML = data.logs.map(log => `
-                        <div class="log-entry">
-                            <span class="time">[${log.timestamp}]</span>
-                            <span class="level-${log.level}">${log.message}</span>
-                        </div>
-                    `).join('');
-                    log('📄 Loaded application logs');
-                } else {
-                    container.innerHTML = '<p style="color: #64748b;">No logs available</p>';
-                }
-            } catch (e) {
-                console.error('Error loading logs:', e);
-                log('Error loading logs', 'error');
-            }
+        // Setup event listeners
+        function setupEventListeners() {
+            document.getElementById('keyword-filter').addEventListener('input', applyFilters);
+            document.getElementById('job-type-filter').addEventListener('change', applyFilters);
+            
+            // Source checkboxes
+            document.getElementById('source-seek').addEventListener('change', applyFilters);
+            document.getElementById('source-linkedin').addEventListener('change', applyFilters);
+            document.getElementById('source-indeed').addEventListener('change', applyFilters);
+            document.getElementById('source-medical').addEventListener('change', applyFilters);
         }
 
-        // Filter events
-        document.getElementById('job-type').addEventListener('change', loadJobs);
-        document.getElementById('keywords').addEventListener('input', loadJobs);
-        document.getElementById('source').addEventListener('change', loadJobs);
-        document.getElementById('location').addEventListener('input', loadJobs);
+        // Start polling
+        function startPolling() {
+            setInterval(async () => {
+                await loadJobs();
+                updateStats();
+            }, 30000); // Poll every 30 seconds
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+        }
+
+        // Open favorites
+        function openFavorites() {
+            showToast('Favorites panel opening...', 'info');
+            // TODO: Implement favorites modal
+        }
+
+        // Open applications
+        function openApplications() {
+            showToast('Applications panel opening...', 'info');
+            // TODO: Implement applications panel
+        }
+
+        // Export jobs
+        function exportJobs() {
+            showToast('Exporting jobs...', 'info');
+            // TODO: Implement CSV export
+        }
+
+        // Show settings
+        function showSettings() {
+            showToast('Settings panel opening...', 'info');
+            // TODO: Implement settings panel
+        }
+
+        // Show notifications
+        function showNotifications() {
+            document.getElementById('notification-modal').classList.remove('hidden');
+            document.getElementById('notification-list').innerHTML = `
+                <div class="p-3 bg-slate-800/50 rounded-lg">
+                    <p class="text-slate-300">No new notifications</p>
+                </div>
+            `;
+        }
+
+        // Close notifications
+        function closeNotifications() {
+            document.getElementById('notification-modal').classList.add('hidden');
+        }
     </script>
 </body>
 </html>

@@ -65,6 +65,183 @@
         "critical care",
         "brisbane"
       ]
+    },
+    {
+      "id": "seek_92f552cb",
+      "title": "Senior Anaesthetist - Sydney",
+      "company": "Royal North Shore Hospital",
+      "location": "Sydney, NSW",
+      "url": "https://www.seek.com.au/job/seek1",
+      "source": "seek",
+      "posted_date": "2026-09-28T10:05:06.851084Z",
+      "job_type": "Full-time",
+      "salary_min": 150000,
+      "salary_max": 250000,
+      "description": "Seeking experienced anaesthetist for Sydney hospital",
+      "requirements": [
+        "FRANZCA",
+        "5+ years experience"
+      ],
+      "tags": [
+        "anaesthesia",
+        "hospital",
+        "sydney"
+      ]
+    },
+    {
+      "id": "seek_49025329",
+      "title": "Anaesthetist - Melbourne VIC",
+      "company": "Austin Health",
+      "location": "Melbourne, VIC",
+      "url": "https://www.seek.com.au/job/seek2",
+      "source": "seek",
+      "posted_date": "2026-09-28T10:05:06.851096Z",
+      "job_type": "Full-time",
+      "salary_min": 140000,
+      "salary_max": 220000,
+      "description": "Anaesthetist position available in Melbourne",
+      "requirements": [
+        "FRANZCA",
+        "3+ years experience"
+      ],
+      "tags": [
+        "anaesthesia",
+        "hospital",
+        "melbourne"
+      ]
+    },
+    {
+      "id": "linkedin_2f089ab1",
+      "title": "Anaesthetist - Brisbane QLD",
+      "company": "Queensland Health",
+      "location": "Brisbane, QLD",
+      "url": "https://au.linkedin.com/jobs/linkedin1",
+      "source": "linkedin",
+      "posted_date": "2026-09-28T10:05:06.851111Z",
+      "job_type": "Full-time",
+      "salary_min": 145000,
+      "salary_max": 230000,
+      "description": "Anaesthetist role at Queensland Health",
+      "requirements": [
+        "FRANZCA",
+        "NSW pathway eligible"
+      ],
+      "tags": [
+        "anaesthesia",
+        "government",
+        "brisbane"
+      ]
+    },
+    {
+      "id": "linkedin_ee910c42",
+      "title": "Critical Care Anaesthetist - Perth WA",
+      "company": "Royal Perth Hospital",
+      "location": "Perth, WA",
+      "url": "https://au.linkedin.com/jobs/linkedin2",
+      "source": "linkedin",
+      "posted_date": "2026-09-28T10:05:06.851117Z",
+      "job_type": "Full-time",
+      "salary_min": 160000,
+      "salary_max": 260000,
+      "description": "Critical care anaesthetist position",
+      "requirements": [
+        "FRANZCA",
+        "Critical care experience"
+      ],
+      "tags": [
+        "anaesthesia",
+        "critical care",
+        "perth"
+      ]
+    },
+    {
+      "id": "indeed_911dd601",
+      "title": "Anaesthetist - Adelaide SA",
+      "company": "Women's and Children's Hospital",
+      "location": "Adelaide, SA",
+      "url": "https://au.indeed.com/jobs/indeed1",
+      "source": "indeed",
+      "posted_date": "2026-09-28T10:05:06.851127Z",
+      "job_type": "Full-time",
+      "salary_min": 140000,
+      "salary_max": 220000,
+      "description": "Anaesthetist position in Adelaide",
+      "requirements": [
+        "FRANZCA"
+      ],
+      "tags": [
+        "anaesthesia",
+        "hospital",
+        "adelaide"
+      ]
+    },
+    {
+      "id": "indeed_859a20d2",
+      "title": "Consultant Anaesthetist - Hobart TAS",
+      "company": "Royal Hobart Hospital",
+      "location": "Hobart, TAS",
+      "url": "https://au.indeed.com/jobs/indeed2",
+      "source": "indeed",
+      "posted_date": "2026-09-28T10:05:06.851132Z",
+      "job_type": "Full-time",
+      "salary_min": 155000,
+      "salary_max": 240000,
+      "description": "Consultant anaesthetist role",
+      "requirements": [
+        "FRANZCA",
+        "Consultant level"
+      ],
+      "tags": [
+        "anaesthesia",
+        "consultant",
+        "hobart"
+      ]
+    },
+    {
+      "id": "medical_boards_0c31f527",
+      "title": "Anaesthetist - Darwin NT",
+      "company": "Top End Health Service",
+      "location": "Darwin, NT",
+      "url": "https://medjobs.com.au/job/medboard1",
+      "source": "medical_boards",
+      "board": "MedJobs.com.au",
+      "posted_date": "2026-09-28T10:05:06.851482Z",
+      "job_type": "Full-time",
+      "salary_min": 145000,
+      "salary_max": 235000,
+      "description": "Anaesthetist in remote Darwin",
+      "requirements": [
+        "FRANZCA",
+        "Remote location experience"
+      ],
+      "tags": [
+        "anaesthesia",
+        "remote",
+        "darwin"
+      ]
+    },
+    {
+      "id": "medical_boards_73956c8a",
+      "title": "Anaesthesia Specialist - Canberra ACT",
+      "company": "Canberra Health Services",
+      "location": "Canberra, ACT",
+      "url": "https://medrecruit.com.au/job/medboard2",
+      "source": "medical_boards",
+      "board": "MedRecruit",
+      "posted_date": "2026-09-28T10:05:06.851492Z",
+      "job_type": "Full-time",
+      "salary_min": 150000,
+      "salary_max": 245000,
+      "description": "Anaesthesia specialist position",
+      "requirements": [
+        "FRANZCA",
+        "Subspecialty interest"
+      ],
+      "tags": [
+        "anaesthesia",
+        "specialist",
+        "canberra"
+      ]
     }
   ]
 }

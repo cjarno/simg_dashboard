@@ -1,1 +1,545 @@
-{"last_updated": null, "events": []}
+{
+  "last_updated": "2026-09-28T10:10:59.729740Z",
+  "events": [
+    {
+      "timestamp": "2026-09-28T09:29:18.259656Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:29:53.597552Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:29:58.711911Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:29:59.931043Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:30:00.085189Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:30:01.723170Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:02.080710Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:03.095470Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:03.977763Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:04.522722Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:04.960986Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:05.061423Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:05.220293Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:05.387242Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:05.500847Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:05.789060Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:05.852146Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:08.022532Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:08.756386Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:11.497139Z",
+      "event": "get_job_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:12.676677Z",
+      "event": "get_job_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:14.008716Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:14.728226Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:15.119394Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:33:17.601532Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:40:29.215699Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:40:52.608014Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:41:15.546718Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:41:25.789799Z",
+      "event": "scrape_error",
+      "details": {
+        "source": "seek",
+        "error": "SEEKScraper.__init__() got an unexpected keyword argument 'location'"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:41:45.699086Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:42:15.591238Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:42:45.589033Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:43:15.589541Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:43:45.590207Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:43:51.502170Z",
+      "event": "scrape_error",
+      "details": {
+        "source": "seek",
+        "error": "SEEKScraper.__init__() got an unexpected keyword argument 'location'"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:44:15.588824Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:44:32.927450Z",
+      "event": "scrape_error",
+      "details": {
+        "source": "seek",
+        "error": "object of type 'coroutine' has no len()"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:44:45.585436Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:45:15.584802Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:45:45.586828Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:46:15.592832Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:46:21.065018Z",
+      "event": "scrape_error",
+      "details": {
+        "source": "seek",
+        "error": "object of type 'coroutine' has no len()"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:46:45.588592Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:47:15.592344Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:47:45.592898Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:47:55.631191Z",
+      "event": "scrape_error",
+      "details": {
+        "source": "seek",
+        "error": "object of type 'coroutine' has no len()"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:48:15.587889Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:48:45.586967Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:49:02.803088Z",
+      "event": "scrape_error",
+      "details": {
+        "source": "seek",
+        "error": "object of type 'coroutine' has no len()"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:49:15.587935Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:49:45.588183Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:50:15.583628Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:50:16.874045Z",
+      "event": "scrape_error",
+      "details": {
+        "source": "seek",
+        "error": "object of type 'coroutine' has no len()"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:50:45.591824Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:51:04.388391Z",
+      "event": "scrape_error",
+      "details": {
+        "source": "seek",
+        "error": "object of type 'coroutine' has no len()"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:51:15.588342Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:51:39.474191Z",
+      "event": "scrape_error",
+      "details": {
+        "source": "seek",
+        "error": "object of type 'coroutine' has no len()"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:51:45.590551Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:52:15.584731Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:52:45.584953Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:53:15.590964Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:53:41.139610Z",
+      "event": "scrape_error",
+      "details": {
+        "source": "seek",
+        "error": "object of type 'coroutine' has no len()"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:53:45.592309Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:54:15.583857Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:54:45.595416Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:55:15.593815Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:55:45.586016Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:56:15.595844Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:56:45.585738Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T09:57:11.814016Z",
+      "event": "list_jobs_error",
+      "details": {
+        "error": "[Errno 22] Invalid argument"
+      }
+    },
+    {
+      "timestamp": "2026-09-28T10:01:43.670785Z",
+      "event": "jobs_scraped",
+      "details": {
+        "source": "seek",
+        "count": 2
+      }
+    },
+    {
+      "timestamp": "2026-09-28T10:03:14.996671Z",
+      "event": "jobs_scraped",
+      "details": {
+        "source": "seek",
+        "count": 2
+      }
+    },
+    {
+      "timestamp": "2026-09-28T10:04:25.183153Z",
+      "event": "jobs_scraped",
+      "details": {
+        "source": "seek",
+        "count": 2
+      }
+    },
+    {
+      "timestamp": "2026-09-28T10:09:04.250128Z",
+      "event": "jobs_scraped",
+      "details": {
+        "source": "seek",
+        "count": 2
+      }
+    },
+    {
+      "timestamp": "2026-09-28T10:10:59.729750Z",
+      "event": "jobs_scraped",
+      "details": {
+        "source": "seek",
+        "count": 2
+      }
+    }
+  ]
+}
