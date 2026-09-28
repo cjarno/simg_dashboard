@@ -573,22 +573,8 @@
                 indeed: true,
                 medical_boards: true
             },
-            // SIMG Report 1 Criteria filters (15 criteria)
-            age_min: null,
-            age_max: null,
-            gender: '',
-            medical_degree: '',
-            years_experience_min: null,
-            years_experience_max: null,
-            country_of_birth: '',
-            country_of_practice: '',
-            subspecialty_interest: '',
-            job_type_simg: '',
-            visa_status: '',
-            relocation_willing: false,
-            salary_min: null,
-            salary_max: null,
-            keywords: []
+            // SIMG Report 1 Criteria filters (15 criteria) - keys will be set dynamically in applyFilters()
+            // These are placeholder values
         };
         let SIMG_Criteria = [
             { id: 1, name: 'Medical Degree (MBBS/MD)', type: 'select', options: ['MBBS', 'MD', 'DO', 'Other'], value: '' },
@@ -697,15 +683,21 @@
                     </div>
 
                     <div class="flex items-center gap-3 pt-3 border-t border-slate-700">
-                        <a href="${job.url || '#'}" target="_blank" class="btn btn-gradient flex-1 py-2 rounded-lg text-sm font-medium">
+                        <a href="${job.url || 'https://seek.co.au'}" target="_blank" rel="noopener noreferrer" class="btn btn-gradient flex-1 py-2 rounded-lg text-sm font-medium">
                             <i class="fas fa-external-link-alt mr-2"></i>View Job
                         </a>
-                        <button onclick="applyJob('${job.id || 'unknown'}')" class="btn btn-secondary flex-1 py-2 rounded-lg text-sm font-medium">
+                        <button onclick="trackApplication('${job.id || 'unknown'}', '${job.title || 'Untitled'}')" class="btn btn-secondary flex-1 py-2 rounded-lg text-sm font-medium">
                             <i class="fas fa-paper-plane mr-2"></i>Apply
                         </button>
                     </div>
                 </div>
             `).join('');
+        }
+
+        // Track job applications
+        function trackApplication(jobId, jobTitle) {
+            showToast('Application tracking requires authentication. Please login first.', 'info');
+            console.log(`Application tracked for job ID: ${jobId}, Title: ${jobTitle}`);
         }
 
         // Update stats
@@ -828,10 +820,85 @@
                 if (filters.salary_min && (job.salary_max || 0) < filters.salary_min) return false;
                 if (filters.salary_max && (job.salary_min || 0) > filters.salary_max) return false;
                 
-                // SIMG filters (based on job requirements/tags)
-                if (filters.years_experience_min && job.requirements?.some(r => r.includes('years'))) {
-                    const years = parseInt(job.requirements.find(r => r.includes('years'))?.match(/\d+/)?.[0] || 0);
-                    if (years < filters.years_experience_min) return false;
+                // SIMG Report 1 Criteria filters
+                
+                // 1. Medical Degree
+                if (filters.medical_degree && filters.medical_degree !== 'All') {
+                    if (!job.requirements?.some(r => r.toLowerCase().includes(filters.medical_degree.toLowerCase()))) return false;
+                }
+                
+                // 2. Years of Experience
+                if (filters.years_experience_min) {
+                    const yearsMatch = job.requirements?.find(r => r.toLowerCase().includes('years') && r.toLowerCase().includes('experience'));
+                    if (yearsMatch) {
+                        const years = parseInt(yearsMatch.match(/\d+/)?.[0] || 0);
+                        if (years < filters.years_experience_min) return false;
+                    }
+                }
+                
+                // 3. Country of Birth
+                if (filters.country_of_birth && filters.country_of_birth !== 'All') {
+                    if (!job.requirements?.some(r => r.toLowerCase().includes(filters.country_of_birth.toLowerCase()))) return false;
+                }
+                
+                // 4. Country of Practice
+                if (filters.country_of_practice && filters.country_of_practice !== 'All') {
+                    if (!job.requirements?.some(r => r.toLowerCase().includes(filters.country_of_practice.toLowerCase()))) return false;
+                }
+                
+                // 5. Subspecialty Interest
+                if (filters.subspecialty_interest && filters.subspecialty_interest !== 'All') {
+                    if (!job.tags?.some(t => t.toLowerCase().includes(filters.subspecialty_interest.toLowerCase()))) return false;
+                    if (!job.requirements?.some(r => r.toLowerCase().includes(filters.subspecialty_interest.toLowerCase()))) return false;
+                }
+                
+                // 6. Visa Status
+                if (filters.visa_status && filters.visa_status !== 'All') {
+                    if (!job.requirements?.some(r => r.toLowerCase().includes(filters.visa_status.toLowerCase()))) return false;
+                }
+                
+                // 7. Relocation Willingness
+                if (filters.relocation_willing === true) {
+                    if (!job.requirements?.some(r => r.toLowerCase().includes('relocation'))) return false;
+                }
+                
+                // 8. Salary Expectations
+                if (filters.salary_min && (job.salary_max || 0) < filters.salary_min) return false;
+                if (filters.salary_max && (job.salary_min || 0) > filters.salary_max) return false;
+                
+                // 9. Gender
+                if (filters.gender && filters.gender !== 'All') {
+                    if (!job.requirements?.some(r => r.toLowerCase().includes(filters.gender.toLowerCase()))) return false;
+                }
+                
+                // 10. Age Range
+                if (filters.age_min || filters.age_max) {
+                    if (!job.requirements?.some(r => r.toLowerCase().includes('age'))) return false;
+                }
+                
+                // 11. Academic Qualifications
+                if (filters.academic_qualifications && filters.academic_qualifications !== 'All') {
+                    if (!job.requirements?.some(r => r.toLowerCase().includes(filters.academic_qualifications.toLowerCase()))) return false;
+                }
+                
+                // 12. Research Experience
+                if (filters.research_experience && filters.research_experience !== 'All') {
+                    if (!job.requirements?.some(r => r.toLowerCase().includes(filters.research_experience.toLowerCase()))) return false;
+                }
+                
+                // 13. Language Skills
+                if (filters.language_skills && filters.language_skills !== 'All') {
+                    if (!job.requirements?.some(r => r.toLowerCase().includes(filters.language_skills.toLowerCase()))) return false;
+                }
+                
+                // 14. FRANZCA Membership
+                if (filters.franzca_membership === true) {
+                    if (!job.requirements?.some(r => r.toLowerCase().includes('franzca'))) return false;
+                }
+                
+                // 15. Postgraduate Training
+                if (filters.postgraduate_training && filters.postgraduate_training !== 'All') {
+                    if (!job.requirements?.some(r => r.toLowerCase().includes(filters.postgraduate_training.toLowerCase()))) return false;
                 }
                 
                 return true;
@@ -842,6 +909,22 @@
         function clearFilters() {
             document.getElementById('keyword-filter').value = '';
             document.getElementById('job-type-filter').value = '';
+            
+            // Clear SIMG filters
+            SIMG_Criteria.forEach(criterion => {
+                const inputId = `simg-${criterion.id}`;
+                const input = document.getElementById(inputId);
+                if (input) {
+                    if (criterion.type === 'select') {
+                        input.value = '';
+                    } else if (criterion.type === 'range') {
+                        input.value = '';
+                    } else if (criterion.type === 'checkbox') {
+                        input.checked = false;
+                    }
+                }
+            });
+            
             applyFilters();
         }
 
