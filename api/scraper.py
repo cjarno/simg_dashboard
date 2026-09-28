@@ -61,6 +61,7 @@ async def scrape_jobs(source: str = "seek"):
         ScraperClass = scraper_map[source]
         scraper = ScraperClass()
         jobs = await scraper.scrape()
+        scraper.close()
         
         log_event("jobs_scraped", {"source": source, "count": len(jobs)})
         

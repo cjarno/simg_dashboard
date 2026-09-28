@@ -417,9 +417,10 @@
 
                     <!-- SIMG Criteria Filters -->
                     <div class="filter-section mb-6">
-                        <h4><i class="fas fa-clipboard-check text-cyan-400"></i> SIMG Criteria</h4>
-                        <div id="simg-filters" class="space-y-3">
-                            <!-- Will be populated by JS -->
+                        <h4><i class="fas fa-clipboard-check text-cyan-400"></i> SIMG Report 1 Criteria (15 Filters)</h4>
+                        <p class="text-xs text-slate-400 mb-3">Filter jobs based on SIMG pathway requirements</p>
+                        <div id="simg-filters" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <!-- Populated by JavaScript -->
                         </div>
                     </div>
 
@@ -562,26 +563,54 @@
         // State
         let jobs = [];
         let favorites = [];
+        let filters = {
+            // Basic filters
+            keyword: '',
+            job_type: '',
+            source: {
+                seek: true,
+                linkedin: true,
+                indeed: true,
+                medical_boards: true
+            },
+            // SIMG Report 1 Criteria filters (15 criteria)
+            age_min: null,
+            age_max: null,
+            gender: '',
+            medical_degree: '',
+            years_experience_min: null,
+            years_experience_max: null,
+            country_of_birth: '',
+            country_of_practice: '',
+            subspecialty_interest: '',
+            job_type_simg: '',
+            visa_status: '',
+            relocation_willing: false,
+            salary_min: null,
+            salary_max: null,
+            keywords: []
+        };
         let SIMG_Criteria = [
-            'Complete medical school application',
-            'Submit citizenship documents',
-            'Provide proof of identity',
-            'Submit academic transcripts',
-            'Provide evidence of work experience',
-            'Pass English proficiency test',
-            'Provide medical council registration',
-            'Submit proof of professional experience',
-            'Provide medical references',
-            'Complete health assessment',
-            'Submit character references',
-            'Provide police clearance',
-            'Submit medical fitness certificate',
-            'Provide vaccination records',
-            'Complete personality assessment'
+            { id: 1, name: 'Medical Degree (MBBS/MD)', type: 'select', options: ['MBBS', 'MD', 'DO', 'Other'], value: '' },
+            { id: 2, name: 'Years of Experience', type: 'range', min: 0, max: 30, value: null },
+            { id: 3, name: 'Country of Birth', type: 'select', options: ['Australia', 'Germany', 'UK', 'USA', 'India', 'Other'], value: '' },
+            { id: 4, name: 'Country of Practice', type: 'select', options: ['Australia', 'Germany', 'UK', 'USA', 'Other'], value: '' },
+            { id: 5, name: 'Subspecialty Interest', type: 'select', options: ['Anaesthesia', 'Critical Care', 'Paediatric', 'Obstetric', 'Pain Medicine', 'Other'], value: '' },
+            { id: 6, name: 'Visa Status', type: 'select', options: ['Permanent Resident', 'Citizen', 'Working Visa', 'Student Visa', 'No Visa Required'], value: '' },
+            { id: 7, name: 'Relocation Willingness', type: 'checkbox', value: false },
+            { id: 8, name: 'Salary Expectations', type: 'range', min: 80000, max: 400000, value: null },
+            { id: 9, name: 'Gender', type: 'select', options: ['Male', 'Female', 'Non-binary', 'Prefer not to say'], value: '' },
+            { id: 10, name: 'Age Range', type: 'range', min: 18, max: 60, value: null },
+            { id: 11, name: 'Academic Qualifications', type: 'select', options: ['None', 'Master\'s', 'PhD', 'Fellowship'], value: '' },
+            { id: 12, name: 'Research Experience', type: 'select', options: ['None', 'Limited', 'Moderate', 'Extensive'], value: '' },
+            { id: 13, name: 'Language Skills', type: 'select', options: ['English only', 'English + German', 'English + Other', 'Multilingual'], value: '' },
+            { id: 14, name: 'FRANZCA Membership', type: 'checkbox', value: false },
+            { id: 15, name: 'Postgraduate Training', type: 'select', options: ['None', 'Intensive Course', 'Residency', 'Fellowship'], value: '' }
         ];
 
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
+            initSIMGFilters();
             await loadJobs();
             await loadFavorites();
             updateStats();
@@ -658,6 +687,14 @@
                         ${job.tags?.map(tag => `<span class="tag">${tag}</span>`).join('')}
                         ${job.requirements?.slice(0, 3)?.map(req => `<span class="simg-criteria">${req}</span>`).join('')}
                     </div>
+                    
+                    <!-- SIMG Match Score -->
+                    <div class="mt-3 pt-3 border-t border-slate-700">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-400">SIMG Match Score</span>
+                            <span class="text-xs font-semibold text-cyan-400 bg-cyan-900/30 px-2 py-1 rounded">${calculateSIMGMatch(job) || 'N/A'}</span>
+                        </div>
+                    </div>
 
                     <div class="flex items-center gap-3 pt-3 border-t border-slate-700">
                         <a href="${job.url || '#'}" target="_blank" class="btn btn-gradient flex-1 py-2 rounded-lg text-sm font-medium">
@@ -700,24 +737,105 @@
             }
         }
 
+        // Build SIMG filter HTML
+        function buildSIMGFilters() {
+            const container = document.getElementById('simg-filters');
+            container.innerHTML = SIMG_Criteria.map(criterion => {
+                let html = '';
+                
+                if (criterion.type === 'select') {
+                    html = `
+                        <div class="filter-item">
+                            <label class="block text-sm text-slate-300 mb-1">${criterion.name}</label>
+                            <select id="simg-${criterion.id}" class="w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:border-cyan-400">
+                                <option value="">${criterion.name} - All</option>
+                                ${criterion.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                } else if (criterion.type === 'range') {
+                    html = `
+                        <div class="filter-item">
+                            <label class="block text-sm text-slate-300 mb-1">${criterion.name}</label>
+                            <input type="range" id="simg-${criterion.id}" min="${criterion.min}" max="${criterion.max}" value="${criterion.value || ''}" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                            <div class="flex justify-between text-xs text-slate-400 mt-1">
+                                <span>${criterion.min}</span>
+                                <span>${criterion.max}</span>
+                            </div>
+                        </div>
+                    `;
+                } else if (criterion.type === 'checkbox') {
+                    html = `
+                        <div class="filter-item flex items-center gap-2">
+                            <input type="checkbox" id="simg-${criterion.id}" class="w-4 h-4 rounded border-slate-600 text-cyan-400 focus:ring-cyan-400">
+                            <span class="text-sm text-slate-300">${criterion.name}</span>
+                        </div>
+                    `;
+                }
+                
+                return html;
+            }).join('');
+        }
+
         // Apply filters
         function applyFilters() {
-            const keyword = document.getElementById('keyword-filter').value.toLowerCase();
-            const jobType = document.getElementById('job-type-filter').value;
+            // Get basic filters
+            filters.keyword = document.getElementById('keyword-filter').value.toLowerCase();
+            filters.job_type = document.getElementById('job-type-filter').value;
             
-            const filtered = jobs.filter(job => {
-                const matchesKeyword = !keyword || 
-                    job.title?.toLowerCase().includes(keyword) ||
-                    job.description?.toLowerCase().includes(keyword) ||
-                    job.location?.toLowerCase().includes(keyword);
-                
-                const matchesType = !jobType || job.job_type === jobType;
-                
-                return matchesKeyword && matchesType;
+            // Get source filters
+            filters.source.seek = document.getElementById('source-seek').checked;
+            filters.source.linkedin = document.getElementById('source-linkedin').checked;
+            filters.source.indeed = document.getElementById('source-indeed').checked;
+            filters.source.medical_boards = document.getElementById('source-medical').checked;
+            
+            // Get SIMG filters
+            SIMG_Criteria.forEach(criterion => {
+                if (criterion.type === 'select') {
+                    filters[criterion.name.toLowerCase().replace(/\s+/g, '_')] = document.getElementById(`simg-${criterion.id}`).value;
+                } else if (criterion.type === 'range') {
+                    const value = document.getElementById(`simg-${criterion.id}`).value;
+                    filters[criterion.name.toLowerCase().replace(/\s+/g, '_')] = value ? parseInt(value) : null;
+                } else if (criterion.type === 'checkbox') {
+                    filters[criterion.name.toLowerCase().replace(/\s+/g, '_')] = document.getElementById(`simg-${criterion.id}`).checked;
+                }
             });
             
+            const filtered = filterJobs(filters);
             renderJobs(filtered);
             showToast('Filters applied', 'success');
+        }
+
+        // Filter jobs by criteria
+        function filterJobs(filters) {
+            return jobs.filter(job => {
+                // Basic filters
+                if (filters.keyword && !filters.keyword.includes('none')) {
+                    const matches = job.title?.toLowerCase().includes(filters.keyword) ||
+                                   job.description?.toLowerCase().includes(filters.keyword) ||
+                                   job.location?.toLowerCase().includes(filters.keyword);
+                    if (!matches) return false;
+                }
+                
+                if (filters.job_type && filters.job_type !== 'All') {
+                    if (job.job_type !== filters.job_type) return false;
+                }
+                
+                // Source filter
+                if (!filters.source[job.source]) return false;
+                
+                // Salary filter
+                if (filters.salary_min && (job.salary_max || 0) < filters.salary_min) return false;
+                if (filters.salary_max && (job.salary_min || 0) > filters.salary_max) return false;
+                
+                // SIMG filters (based on job requirements/tags)
+                if (filters.years_experience_min && job.requirements?.some(r => r.includes('years'))) {
+                    const years = parseInt(job.requirements.find(r => r.includes('years'))?.match(/\d+/)?.[0] || 0);
+                    if (years < filters.years_experience_min) return false;
+                }
+                
+                return true;
+            });
         }
 
         // Clear filters
@@ -794,6 +912,26 @@
             document.getElementById('source-linkedin').addEventListener('change', applyFilters);
             document.getElementById('source-indeed').addEventListener('change', applyFilters);
             document.getElementById('source-medical').addEventListener('change', applyFilters);
+            
+            // SIMG filter inputs
+            SIMG_Criteria.forEach(criterion => {
+                const inputId = `simg-${criterion.id}`;
+                const input = document.getElementById(inputId);
+                if (input) {
+                    if (criterion.type === 'select') {
+                        input.addEventListener('change', applyFilters);
+                    } else if (criterion.type === 'range') {
+                        input.addEventListener('input', applyFilters);
+                    } else if (criterion.type === 'checkbox') {
+                        input.addEventListener('change', applyFilters);
+                    }
+                }
+            });
+        }
+
+        // Build SIMG filters on load
+        function initSIMGFilters() {
+            buildSIMGFilters();
         }
 
         // Start polling
@@ -812,6 +950,24 @@
                 day: 'numeric', 
                 year: 'numeric' 
             });
+        }
+
+        // Calculate SIMG match score for a job
+        function calculateSIMGMatch(job) {
+            if (!job.requirements || job.requirements.length === 0) return null;
+            
+            let score = 0;
+            const requirements = job.requirements;
+            
+            // Check for common SIMG criteria in requirements
+            if (requirements.some(r => r.toLowerCase().includes('franzca'))) score += 20;
+            if (requirements.some(r => r.toLowerCase().includes('years'))) score += 15;
+            if (requirements.some(r => r.toLowerCase().includes('experience'))) score += 10;
+            if (requirements.some(r => r.toLowerCase().includes('hospital'))) score += 10;
+            if (requirements.some(r => r.toLowerCase().includes('anaesthesia'))) score += 10;
+            if (requirements.some(r => r.toLowerCase().includes('critical care'))) score += 15;
+            
+            return score;
         }
 
         // Open favorites
